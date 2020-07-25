@@ -8,6 +8,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+$url = parse_url(getenv("DATABASE_URL"));
 
 return [
 
@@ -23,7 +24,10 @@ return [
     */
 
     'default' => env('DB_DRIVER', 'sqlite'),
-
+    $host = $url["host"];
+    $username = $url["user"];
+    $password = $url["pass"];
+    $database = substr($url["path"], 1);
     /*
     |--------------------------------------------------------------------------
     | Database Connections
@@ -65,15 +69,13 @@ return [
 
         'pgsql' => [
             'driver'   => 'pgsql',
-            'host'     => env('DB_HOST', '127.0.0.1'),
-            'port'     => env('DB_PORT', '5432'),
-            'database' => env('DB_DATABASE', 'forge'),
-            'username' => env('DB_USERNAME', 'forge'),
-            'password' => env('DB_PASSWORD', ''),
+            'host'     => $host,
+            'database' => $database,
+            'username' => $username,
+            'password' => $password,
             'charset'  => 'utf8',
-            'prefix'   => env('DB_PREFIX', null),
-            'schema'   => env('DB_SCHEMA', 'public'),
-            'sslmode'  => 'prefer',
+            'prefix'   => '',
+            'schema'   => 'public',
         ],
 
     ],
