@@ -8,8 +8,17 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-$url = parse_url(getenv("DATABASE_URL"));
-
+    $url = parse_url(getenv("DATABASE_URL"));
+    $host = $url["host"];
+    $username = $url["user"];
+    $password = $url["pass"];
+    $database = substr($url["path"], 1);
+    
+    $redis = parse_url(getenv("REDIS_URL"));
+    $redis_host = $redis['host'];
+    $redis_user = $redis['user'];
+    $redis_pass = $redis['pass'];
+    
 return [
 
     /*
@@ -23,11 +32,6 @@ return [
     |
     */
 
-    'default' => env('DB_DRIVER', 'sqlite'),
-    $host = $url["host"];
-    $username = $url["user"];
-    $password = $url["pass"];
-    $database = substr($url["path"], 1);
     /*
     |--------------------------------------------------------------------------
     | Database Connections
@@ -109,10 +113,10 @@ return [
         'client' => 'predis',
 
         'default' => [
-            'host'     => env('REDIS_HOST', '127.0.0.1'),
-            'password' => env('REDIS_PASSWORD', null),
-            'port'     => env('REDIS_PORT', 6379),
-            'database' => env('REDIS_DATABASE', 0),
+            'host'     => $redis_host,
+            'password' => $redis_pw,
+            'port'     => $redis_port,
+            'database' => 0,
         ],
 
     ],
