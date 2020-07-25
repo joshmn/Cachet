@@ -8,7 +8,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-    $db = parse_url(getenv("DATABASE_URL"));
+ $db = parse_url(getenv("DATABASE_URL"));
     $redis = parse_url(getenv("REDIS_URL"));
 
 return [
@@ -23,6 +23,8 @@ return [
     | you may use many connections at once using the Database library.
     |
     */
+
+    'default' => env('DB_DRIVER', 'sqlite'),
 
     /*
     |--------------------------------------------------------------------------
@@ -66,12 +68,14 @@ return [
         'pgsql' => [
             'driver'   => 'pgsql',
             'host'     => $db['host'],
+            'port'     => $db['port'],
             'database' => substr($db['path'], 1),
             'username' => $db['user'],
             'password' => $db['pass'],
             'charset'  => 'utf8',
-            'prefix'   => '',
-            'schema'   => 'public',
+            'prefix'   => env('DB_PREFIX', null),
+            'schema'   => env('DB_SCHEMA', 'public'),
+            'sslmode'  => 'prefer',
         ],
 
     ],
@@ -109,7 +113,7 @@ return [
             'password' => $redis['pass'],
             'username' => $redis['user'],
             'port'     => $redis['port'],
-            'database' => 0,
+            'database' => '0',
         ],
 
     ],
