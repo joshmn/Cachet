@@ -16,9 +16,8 @@
     
     $redis = parse_url(getenv("REDIS_URL"));
     $redis_host = $redis['host'];
-    $redis_user = $redis['user'];
-    $redis_pass = $redis['pass'];
-    
+    $redis_pw = $redis['pass'];
+
 return [
 
     /*
