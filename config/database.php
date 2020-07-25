@@ -65,10 +65,10 @@ return [
 
         'pgsql' => [
             'driver'   => 'pgsql',
-            'host'     => $redis['host'],
-            'database' => substr($redis['path'], 1),
-            'username' => $redis['user'],
-            'password' => $redis['pass'],
+            'host'     => $db['host'],
+            'database' => substr($db['path'], 1),
+            'username' => $db['user'],
+            'password' => $db['pass'],
             'charset'  => 'utf8',
             'prefix'   => '',
             'schema'   => 'public',
