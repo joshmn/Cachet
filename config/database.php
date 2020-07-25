@@ -8,15 +8,8 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-    $url = parse_url(getenv("DATABASE_URL"));
-    $host = $url["host"];
-    $username = $url["user"];
-    $password = $url["pass"];
-    $database = substr($url["path"], 1);
-    
+    $db = parse_url(getenv("DATABASE_URL"));
     $redis = parse_url(getenv("REDIS_URL"));
-    $redis_host = $redis['host'];
-    $redis_pw = $redis['pass'];
 
 return [
 
@@ -72,10 +65,10 @@ return [
 
         'pgsql' => [
             'driver'   => 'pgsql',
-            'host'     => $host,
-            'database' => $database,
-            'username' => $username,
-            'password' => $password,
+            'host'     => $redis['host'],
+            'database' => substr($redis['path'], 1),
+            'username' => $redis['user'],
+            'password' => $redis['pass'],
             'charset'  => 'utf8',
             'prefix'   => '',
             'schema'   => 'public',
@@ -112,9 +105,10 @@ return [
         'client' => 'predis',
 
         'default' => [
-            'host'     => $redis_host,
-            'password' => $redis_pw,
-            'port'     => $redis_port,
+            'host'     => $redis['host'],
+            'password' => $redis['pass'],
+            'username' => $redis['user'],
+            'port'     => $redis['port'],
             'database' => 0,
         ],
 
